@@ -10,8 +10,8 @@ import keras
 # and window-size into a set of input/output pairs for use with our RNN model
 def window_transform_series(series,window_size):
     # containers for input/output pairs
-    X = []
-    y = []
+    X = [[series[i+j] for j in range(0,window_size)] for i, val in enumerate(series) if i<(len(series)-window_size)]
+    y = [val for i, val in enumerate(series) if i>window_size-1]
 
     # reshape each 
     X = np.asarray(X)
@@ -23,7 +23,10 @@ def window_transform_series(series,window_size):
 
 # TODO: build an RNN to perform regression on our time series input/output data
 def build_part1_RNN(step_size, window_size):
-    pass
+    model = Sequential()
+    model.add(LSTM(5, input_shape=(window_size, 1)))
+    model.add(Dense(1))
+    return model
 
 
 ### TODO: list all unique characters in the text and remove any non-english ones
