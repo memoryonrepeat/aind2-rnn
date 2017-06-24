@@ -3,6 +3,7 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+import string
 import keras
 
 
@@ -32,6 +33,19 @@ def build_part1_RNN(step_size, window_size):
 ### TODO: list all unique characters in the text and remove any non-english ones
 def clean_text(text):
     # find all unique characters in the text
+
+    uniques = list(set(text))
+    # print(uniques)
+
+    # Remove any non-ascii characters, except necessary punctuation marks
+    for char in uniques:
+        if char not in string.ascii_lowercase+',.?!:;':
+            text = text.replace(char,' ')
+        
+    # shorten any extra dead space created above
+    text = text.replace('  ',' ')
+
+    return text
 
 
     # remove as many non-english characters and character sequences as you can 
